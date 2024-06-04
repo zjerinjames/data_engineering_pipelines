@@ -1,0 +1,4 @@
+- Kafka
+- Apache Spark
+- Apache Airflow
+- Cassendra
