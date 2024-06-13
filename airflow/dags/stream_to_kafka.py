@@ -58,7 +58,8 @@ def start_streaming():
         if time.time() > end_time:
             break
 
-        producer.send("random_names", json.dumps(kafka_data).encode('utf-8'))
+        # producer.send("random_names", json.dumps(kafka_data).encode('utf-8'))
+        producer.send("randomnames", json.dumps(kafka_data).encode('utf-8'))
         time.sleep(10)
 
 

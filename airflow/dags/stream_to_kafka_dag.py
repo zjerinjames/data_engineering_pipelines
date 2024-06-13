@@ -12,7 +12,7 @@ default_args = {
 
 # you can use cron expression also for schedule_interval
 with DAG(
-        dag_id="people_names",
+        dag_id="randomnames",
         schedule_interval='0 1 * * *',
         default_args=default_args,
         catchup=False) as dag:

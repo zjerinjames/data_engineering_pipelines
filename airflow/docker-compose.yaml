@@ -22,13 +22,17 @@ services:
       - POSTGRES_DB=airflow
     ports:
       - "5432"
+    networks:
+      - airflow-kafka
   init:
     image: *airflow_image
     depends_on:
       - postgres
     environment: *airflow_environment
     entrypoint: /bin/bash
-    command: -c 'airflow db upgrade && sleep 5 && airflow db init && airflow users create --username breno --password fate123 --firstname breno --lastname teixeira --role Admin --email brentchav@gmail.com'
+    command: -c 'airflow db upgrade && sleep 5 && airflow db init && airflow users create --username breno --password fate123 --firstname breno --lastname teixeira --role Admin --email brentcav@gmail.com'
+    networks:
+      - airflow-kafka
   webserver:
     image: *airflow_image
     restart: always
@@ -40,6 +44,8 @@ services:
       - logs:/opt/airflow/logs
     environment: *airflow_environment
     command: webserver
+    networks:
+      - airflow-kafka
   scheduler:
     image: *airflow_image
     restart: always
@@ -54,5 +60,10 @@ services:
       - ./dags/data:/opt/airflow/dags/data
     environment: *airflow_environment
     command: scheduler
+    networks:
+      - airflow-kafka
 volumes:
   logs:
+networks:
+  airflow-kafka:
+    external: true
